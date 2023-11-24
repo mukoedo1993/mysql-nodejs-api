@@ -5,3 +5,6 @@ https://www.youtube.com/watch?v=CXiT-DWn1zs
 
 Right now, I implement a simplext CRUD mysql's GUI.
 authentication parts' GUI is still under construction.
+
+Deployment:
+https://nodejs-showcase-tom.onrender.com/api/v1/posts
