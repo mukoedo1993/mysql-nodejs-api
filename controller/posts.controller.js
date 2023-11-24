@@ -1,11 +1,18 @@
 const pool = require("../database/index")
+
+
 const postsController = {
     getAll: async (req, res) => {
         try {
             const [rows, fields] = await pool.query("select * from posts")
-            res.json({
-                data: rows
-            })
+
+
+ 
+
+            res.render(
+                'default',{rows:rows}
+             )
+           
         } catch (error) {
             console.log(error)
             res.json({
@@ -32,9 +39,9 @@ const postsController = {
             const { title, content } = req.body
             const sql = "insert into posts (title, content) values (?, ?)"
             const [rows, fields] = await pool.query(sql, [title, content])
-            res.json({
-                data: rows
-            })
+            res.render(
+               'view/default',{row:rows}
+            )
         } catch (error) {
             console.log(error)
             res.json({

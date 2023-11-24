@@ -1,0 +1,10 @@
+<h1>test</h1>
+<ul>
+    <% rows.forEach(function(row) { %>
+      <li>
+        <strong><%= row.id %></strong>
+        representing <%= row.title %>,
+        born <%= row.content %>
+      </li>
+    <% }); %>
+  </ul>
