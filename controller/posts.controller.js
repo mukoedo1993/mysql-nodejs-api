@@ -40,10 +40,9 @@ const postsController = {
             console.log(req.body)
             const sql = "insert into posts (title, content, id) values (?, ?, ?)"
             const [rows, fields] = await pool.query(sql, [title, content, id])
-          
-            res.json(
-               {data:rows}
-            )
+            res.render(
+               'after_operation'
+             )
         } catch (error) {
             console.log(error)
             res.json({
@@ -58,9 +57,9 @@ const postsController = {
             const sql = "insert into posts (title, content, id) VALUES (?, ?, ?)"
             const [rows, fields] = await pool.query(sql, [title, content, id])
             
-            res.json({
-                data: rows
-            })
+            res.render(
+                'after_operation'
+              )
         } catch (error) {
             console.log(error)
             res.json({
@@ -74,9 +73,9 @@ const postsController = {
             console.log(id)
         
             const [rows, fields] = await pool.query("delete from posts where id = ?", [id])
-            res.json({
-                data: rows
-            })
+            res.render(
+                'after_operation'
+              )
         } catch (error) {
             console.log(error)
             res.json({
