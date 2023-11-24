@@ -36,11 +36,13 @@ const postsController = {
     },
     create: async (req, res) => {
         try {
-            const { title, content } = req.body
-            const sql = "insert into posts (title, content) values (?, ?)"
-            const [rows, fields] = await pool.query(sql, [title, content])
-            res.render(
-               'view/default',{row:rows}
+            const { title, content, id } = req.body
+            console.log(req.body)
+            const sql = "insert into posts (title, content, id) values (?, ?, ?)"
+            const [rows, fields] = await pool.query(sql, [title, content, id])
+          
+            res.json(
+               {data:rows}
             )
         } catch (error) {
             console.log(error)
@@ -51,10 +53,11 @@ const postsController = {
     },
     update: async (req, res) => {
         try {
-            const { title, content } = req.body
-            const { id } = req.params
-            const sql = "update posts set title = ?, content = ? where id = ?"
+            const { title, content, id } = req.body
+            const [rows2, fields2] = await pool.query("delete from posts where id = ?", [id])
+            const sql = "insert into posts (title, content, id) VALUES (?, ?, ?)"
             const [rows, fields] = await pool.query(sql, [title, content, id])
+            
             res.json({
                 data: rows
             })
@@ -68,6 +71,8 @@ const postsController = {
     delete: async (req, res) => {
         try {
             const { id } = req.params
+            console.log(id)
+        
             const [rows, fields] = await pool.query("delete from posts where id = ?", [id])
             res.json({
                 data: rows
