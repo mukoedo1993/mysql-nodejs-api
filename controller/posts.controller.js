@@ -1,5 +1,11 @@
 const pool = require("../database/index")
 
+//helper function:
+function isInt(value) {
+    return !isNaN(value) && 
+           parseInt(Number(value)) == value && 
+           !isNaN(parseInt(value, 10));
+  }
 
 const postsController = {
     getAll: async (req, res) => {
@@ -13,43 +19,55 @@ const postsController = {
                 'default',{rows:rows}
              )
            
-        } catch (error) {
-            console.log(error)
-            res.json({
-                status: "error"
-            })
-        }
-    },
+        }catch(errors){
+
+            req.flash('errors',errors)
+            console.log(errors)
+               res.render('404', {errors: req.flash('errors')})
+           }
+        },
+
     getById: async (req, res) => {
         try {
             const { id } = req.params
+            
             const [rows, fields] = await pool.query("select * from posts where id = ?", [id])
             res.json({
                 data: rows
             })
-        } catch (error) {
-            console.log(error)
-            res.json({
-                status: "error"
-            })
-        }
-    },
+        }catch(errors){
+            req.flash('errors',errors)
+            console.log(errors)
+               res.render('404', {errors: req.flash('errors')})
+               return -1;
+           }
+         },
     create: async (req, res) => {
         try {
             const { title, content, id } = req.body
+            if((! isInt(id)) || ((id) < 0)){
+                throw new Error("ID must be a number!")}
             console.log(req.body)
             const sql = "insert into posts (title, content, id) values (?, ?, ?)"
             const [rows, fields] = await pool.query(sql, [title, content, id])
             res.render(
                'after_operation'
              )
-        } catch (error) {
-            console.log(error)
-            res.json({
-                status: "error"
-            })
+        } catch(errors){
+            setTimeout(function() {
+            }, 1000);
+            console.log("line 53")
+            console.log(errors)
+            console.log("line 55")
+            req.flash('errors',errors)
+            
+               res.render('404', {errors: req.flash('errors')})
+               return -1;
+           }
+            
         }
-    },
+        ,
+    
     update: async (req, res) => {
         try {
             const { title, content, id } = req.body
@@ -60,13 +78,15 @@ const postsController = {
             res.render(
                 'after_operation'
               )
-        } catch (error) {
-            console.log(error)
-            res.json({
-                status: "error"
-            })
+        } catch(errors){
+            req.flash('errors',errors)
+            console.log(errors)
+               res.render('404', {errors: req.flash('errors')})
+               return -1;
+           }
+           
         }
-    }, 
+    , 
     delete: async (req, res) => {
         try {
             const { id } = req.params
@@ -76,12 +96,12 @@ const postsController = {
             res.render(
                 'after_operation'
               )
-        } catch (error) {
-            console.log(error)
-            res.json({
-                status: "error"
-            })
-        }
+        } catch(errors){
+            req.flash('errors',errors)
+            console.log(errors)
+               res.render('404', {errors: req.flash('errors')})
+               return -1;
+           }
     }
 
 }
