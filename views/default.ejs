@@ -1,17 +1,21 @@
 <%- include ('header') -%>
-
+<%- include ('style') -%>
+<style>
+  * {color:red}
+  </style>
 <form id="database_create" method="post" action="/gui/v1/posts">
   Insert new element here:
   ID will be created by the system.
   <label>Title: </label><input type="text" name="title" id="title">
   <label>Content: </label><input type="text" name="content" id="content">
   <label>ID: </label><input type="text" name="id" id="id" placeholder="must be an positive integer">
-  <input type="submit" value="submit">
+  <label>Create: <input type="submit" value="submit">
   </form>
   <p style="color:red;">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 
 <ol>
     <% rows.forEach(function(row) { %>
+     
       <li>
         <strong><%= row.id %> is the ID.</strong>
        <%= row.title %> is the title.
@@ -27,10 +31,10 @@
           
       </form> 
         <form id="database_delete" method="post" action="/gui/v1/posts/delete/<%= row.id %>">    
-          <label><b>To delete:
+          <label class="delete-post-button"><b>To delete:
           </b>    
           </label>    
-          <button type="submit">Delete</button>
+          <button type="submit" >Delete</button>
           
       </form> 
       <p style="color:red;">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>

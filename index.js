@@ -28,6 +28,11 @@ app.use(flash());
 app.use("/gui/v1/posts", postsRouter)
 app.use("/api/v1/auth", authRouter)
 
+
+
+app.use("/views", express.static(__dirname + "/views/sass"));
+
+
 app.set('view engine', 'ejs')
 
 

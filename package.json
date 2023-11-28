@@ -1,7 +1,8 @@
 {
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "scss": "sass ./views/sass/main.scss ./views/sass/main.css"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -14,6 +15,7 @@
     "googleapis": "^105.0.0",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^2.3.3",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "sass": "^1.69.5"
   }
 }
